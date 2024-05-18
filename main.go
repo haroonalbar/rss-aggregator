@@ -25,14 +25,19 @@ func main() {
 	if port == "" {
 		log.Fatal("Port is not in the env")
 	}
-	fmt.Println("PORT: ", port)
 
 	// adding a router
 	router := chi.NewRouter()
 
 	// creating a server
-	srv := http.Server{
+	srv := &http.Server{
 		Handler: router,
 		Addr:    ":" + port,
 	}
+
+	fmt.Println("Listening to server on PORT:", port)
+	if err := srv.ListenAndServe(); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Listening to server on PORT:", port)
 }
