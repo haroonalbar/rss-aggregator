@@ -35,6 +35,7 @@ func main() {
 		Addr:    ":" + port,
 	}
 
+  //start server
 	fmt.Println("Listening to server on PORT:", port)
 	if err := srv.ListenAndServe(); err != nil {
 		log.Fatal(err)
