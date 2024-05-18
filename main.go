@@ -17,7 +17,9 @@ func main() {
   // but to get it from the .env file we are going to use the godotenv package.
 
 
+  // this will load the env from the .env file
   godotenv.Load()
+
   port := os.Getenv("PORT")
   if port == ""{
     log.Fatal("Port is not in the env")
