@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() { 
@@ -13,6 +15,9 @@ func main() {
   // $ export PORT=8000
   // the above command will add the env variable to the current shell 
   // but to get it from the .env file we are going to use the godotenv package.
+
+
+  godotenv.Load()
   port := os.Getenv("PORT")
   if port == ""{
     log.Fatal("Port is not in the env")
