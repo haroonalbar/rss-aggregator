@@ -39,7 +39,7 @@ func main() {
 	v1Router := chi.NewRouter()
 
   // handle the /ready route with heandleReadiness function
-  v1Router.HandleFunc("/ready",handlerReadiness)
+  v1Router.Get("/ready",handlerReadiness)
 
   // mount the v1Router to router so the whole path will become path/v1/ready
 	router.Mount("/v1", v1Router)
