@@ -2,6 +2,7 @@ package main
 
 import "net/http"
 
-func handleReadiness(w http.ResponseWriter, r *http.Request){
-
+func handlerReadiness(w http.ResponseWriter, r *http.Request) {
+  // use the healper function to respond with json
+	respondWithJSON(w, 200, struct{}{})
 }
