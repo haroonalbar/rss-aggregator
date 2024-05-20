@@ -6,6 +6,22 @@ import (
 	"net/http"
 )
 
+func respondWithError(w http.ResponseWriter, code int, msg string){
+  if(code > 499){
+    log.Printf("Responding with 5XX error: %s",msg)
+  }
+  type errResponse struct{
+    // `json:"error"` tag here is used to tell how to marshal or unmarshal this struct
+    // here it will be attached to key "error" : value what ever the Error is
+    Error string `json:"error"`
+  }
+  // The json.Marshal will look something like this.
+  // {
+  //   "error": "something something"
+  // }
+  respondWithJSON(w,code, errResponse{Error: msg})
+}
+
 // this function is used to handle the json response
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	// marshal means encoding.
