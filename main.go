@@ -12,13 +12,6 @@ import (
 )
 
 func main() {
-	// This fails because PORT is not in the current shell env.
-	// It's not taken from the .env file
-	// we can add the env by using export command
-	// $ export PORT=8000
-	// the above command will add the env variable to the current shell
-	// but to get it from the .env file we are going to use the godotenv package.
-
 	// this will load the env from the .env file
 	godotenv.Load()
 
@@ -27,17 +20,18 @@ func main() {
 		log.Fatal("Port is not in the env")
 	}
 
-	// adding a router
+	// adding a router using chi
 	router := chi.NewRouter()
 
-  router.Use(cors.Handler(cors.Options{
-    AllowedOrigins: []string{"https//*","http//*"},
-    AllowedMethods: []string{"GET","POST", "PUT", "DELETE", "OPTIONS"},
-    AllowedHeaders: []string{"*"},
-    ExposedHeaders: []string{"Link"},
-    AllowCredentials: false,
-    MaxAge: 300,
-  }))
+	// set up cors
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}))
 
 	// creating a server
 	srv := &http.Server{
