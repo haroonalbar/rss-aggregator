@@ -40,6 +40,8 @@ func main() {
 
   // handle the /ready route with heandleReadiness function
   v1Router.Get("/ready",handlerReadiness)
+  //handle error 
+  v1Router.Get("/error",handlerError)
 
   // mount the v1Router to router so the whole path will become path/v1/ready
 	router.Mount("/v1", v1Router)
