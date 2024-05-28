@@ -23,7 +23,6 @@ func main() {
 	// adding a router using chi
 	router := chi.NewRouter()
 
-
 	// set up cors
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
@@ -34,16 +33,16 @@ func main() {
 		MaxAge:           300,
 	}))
 
-  // create another router to mount on router for versioning
-  // this is for future proofing the api
+	// create another router to mount on router for versioning
+	// this is for future proofing the api
 	v1Router := chi.NewRouter()
 
-  // handle the /ready route with heandleReadiness function
-  v1Router.Get("/ready",handlerReadiness)
-  //handle error 
-  v1Router.Get("/error",handlerError)
+	// handle the /ready route with heandleReadiness function
+	v1Router.Get("/ready", handlerReadiness)
+	//handle error
+	v1Router.Get("/error", handlerError)
 
-  // mount the v1Router to router so the whole path will become path/v1/ready
+	// mount the v1Router to router so the whole path will become path/v1/ready
 	router.Mount("/v1", v1Router)
 
 	// creating a server
