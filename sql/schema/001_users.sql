@@ -1,4 +1,6 @@
--- +goose up
+-- sqlc didn't generate properly cause Up in goose Up was in small case🤦.
+
+-- +goose Up
 CREATE TABLE users (
   id UUID PRIMARY KEY,
   created_at TIMESTAMP NOT NULL,
@@ -6,5 +8,5 @@ CREATE TABLE users (
   name TEXT NOT NULL
 );
 
--- +goose down
+-- +goose Down
 DROP TABLE users;
