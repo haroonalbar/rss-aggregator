@@ -45,7 +45,7 @@ func main() {
 		log.Fatal("Unalbe to connect to db:", err)
 	}
 
-  // create a api config
+	// create a api config
 	apiCfg := apiConfig{
 		DB: database.New(conn),
 	}

@@ -31,16 +31,17 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 	}
 
 	// this takes in two values a context and create user parameter
-  user , err := apiCfg.DB.CreateUser(r.Context(), database.CreateUserParams{
+	user, err := apiCfg.DB.CreateUser(r.Context(), database.CreateUserParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
 		Name:      params.Name,
 	})
-  if err!=nil{
-    respondWithError(w, 400, fmt.Sprintf("Error creating user: %v", err))
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error creating user: %v", err))
 		return
-  }
+	}
 
-	respondWithJSON(w, 200, user)
+	respondWithJSON(w, 200, databaseUsertoUser(user))
+
 }
