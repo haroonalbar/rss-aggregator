@@ -30,7 +30,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("Port is not in the env")
+		log.Fatal("PORT is not in the env")
 	}
 
 	dbURL := os.Getenv("DB_URL")
