@@ -42,7 +42,7 @@ func main() {
 	// postgres is the driver name
 	conn, err := sql.Open("postgres", dbURL)
 	if err != nil {
-		log.Fatal("Unalbe to connect to db: %v", err)
+		log.Fatal("Unalbe to connect to db:", err)
 	}
 
   // create a api config
