@@ -28,14 +28,22 @@ func (apiCfg *apiConfig) handlerCreateFeedFollows(w http.ResponseWriter, r *http
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
 		UserID:    user.ID,
-		FeedID:       params.FeedID,
+		FeedID:    params.FeedID,
 	})
 	if err != nil {
 		respondWithError(w, 400, fmt.Sprintf("Error creating feed_follows: %v", err))
 		return
 	}
 
-	respondWithJSON(w, 201, databaseFeedFollowstoFeedFollows(feedFollow))
+	respondWithJSON(w, 201, databaseFeedFollowtoFeedFollow(feedFollow))
 
 }
 
+func (apiCfg *apiConfig) handlerGetFeedFollows(w http.ResponseWriter, r *http.Request, user database.User) {
+	feedFollows, err := apiCfg.DB.GetFeedFollows(r.Context(), user.ID)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get feed_follows: %v", err))
+		return
+	}
+	respondWithJSON(w, 200, databaseFeedFollowstoFeedFollows(feedFollows))
+}

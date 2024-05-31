@@ -62,7 +62,7 @@ type FeedFollow struct {
 	FeedId    uuid.UUID `json:"feed_id"`
 }
 
-func databaseFeedFollowstoFeedFollows(dbFeedFollows database.FeedFollow) FeedFollow {
+func databaseFeedFollowtoFeedFollow(dbFeedFollows database.FeedFollow) FeedFollow {
 	return FeedFollow{
 		ID:        dbFeedFollows.ID,
 		CreatedAt: dbFeedFollows.CreatedAt,
@@ -70,4 +70,12 @@ func databaseFeedFollowstoFeedFollows(dbFeedFollows database.FeedFollow) FeedFol
 		UserId:    dbFeedFollows.UserID,
 		FeedId:    dbFeedFollows.FeedID,
 	}
+}
+
+func databaseFeedFollowstoFeedFollows(dbFeedFollows []database.FeedFollow) []FeedFollow {
+	feedFollows := []FeedFollow{}
+	for _, feedFollow := range dbFeedFollows {
+		feedFollows = append(feedFollows, databaseFeedFollowtoFeedFollow(feedFollow))
+	}
+	return feedFollows
 }
