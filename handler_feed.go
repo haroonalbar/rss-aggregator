@@ -46,5 +46,5 @@ func (apiCfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request)
 		respondWithError(w, 400, fmt.Sprintf("Couldn't get feeds: %v", err))
 		return
 	}
-	respondWithJSON(w, 200, feeds)
+	respondWithJSON(w, 200, databaseFeedstoFeeds(feeds))
 }
