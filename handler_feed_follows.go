@@ -10,6 +10,7 @@ import (
 	"github.com/haroonalbar/rss-aggregater/internal/database"
 )
 
+// a user can only follow a feed once this will fail if you call it twice
 func (apiCfg *apiConfig) handlerCreateFeedFollows(w http.ResponseWriter, r *http.Request, user database.User) {
 	type Parameters struct {
 		FeedID uuid.UUID `json:"feed_id"`
