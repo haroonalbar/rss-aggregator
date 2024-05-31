@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/haroonalbar/rss-aggregater/auth"
 	"github.com/haroonalbar/rss-aggregater/internal/database"
 )
 
@@ -41,27 +42,16 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	respondWithJSON(w, 200, databaseUsertoUser(user))
+	respondWithJSON(w, 201, databaseUsertoUser(user))
 }
 
 func (apiCfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request) {
-	type Parameters struct {
-		ApiKey string `json:"api_key"`
-	}
-	params := Parameters{}
-
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&params)
+	apiKey, err := auth.GetAPIKey(r.Header)
 	if err != nil {
-		respondWithError(w, 400, fmt.Sprintf("Error decoding: %v", err))
+		respondWithError(w, 403, fmt.Sprintf("Auth failed: %v", err))
 		return
 	}
-
-  user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), params.ApiKey)
-	if err != nil {
-		respondWithError(w, 400, fmt.Sprintf("Error creating user: %v", err))
-		return
-	}
+	user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), apiKey)
 
 	respondWithJSON(w, 200, databaseUsertoUser(user))
 }
