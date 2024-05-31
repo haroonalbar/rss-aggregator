@@ -30,7 +30,6 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// this takes in two values a context and create user parameter
 	user, err := apiCfg.DB.CreateUser(r.Context(), database.CreateUserParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
@@ -43,5 +42,26 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 	}
 
 	respondWithJSON(w, 200, databaseUsertoUser(user))
+}
 
+func (apiCfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request) {
+	type Parameters struct {
+		ApiKey string `json:"api_key"`
+	}
+	params := Parameters{}
+
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&params)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error decoding: %v", err))
+		return
+	}
+
+  user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), params.ApiKey)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error creating user: %v", err))
+		return
+	}
+
+	respondWithJSON(w, 200, databaseUsertoUser(user))
 }
