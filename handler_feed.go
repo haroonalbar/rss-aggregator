@@ -24,7 +24,7 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	feeds, err := apiCfg.DB.CreateFeed(r.Context(), database.CreateFeedParams{
+	feed, err := apiCfg.DB.CreateFeed(r.Context(), database.CreateFeedParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
@@ -37,8 +37,40 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	respondWithJSON(w, 201, databaseFeedtoFeed(feeds))
+	respondWithJSON(w, 201, databaseFeedtoFeed(feed))
 
+}
+func (apiCfg *apiConfig) handlerUpdateFeed(w http.ResponseWriter, r *http.Request, user database.User) {
+	type Parameters struct {
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	}
+	feedIDStr := chi.URLParam(r, "feedID")
+	feedID, err := uuid.Parse(feedIDStr)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error parsing feed id from url: %v", err))
+		return
+	}
+	params := Parameters{}
+	decoder := json.NewDecoder(r.Body)
+	err = decoder.Decode(&params)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error decoding: %v", err))
+		return
+	}
+
+	feed, err := apiCfg.DB.UpdateFeed(r.Context(), database.UpdateFeedParams{
+		ID:     feedID,
+		UserID: user.ID,
+		Name:   params.Name,
+		Url:    params.Url,
+	})
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error updating feed: %v", err))
+		return
+	}
+
+	respondWithJSON(w, 201, databaseFeedtoFeed(feed))
 }
 
 func (apiCfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request) {
