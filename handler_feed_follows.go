@@ -50,8 +50,8 @@ func (apiCfg *apiConfig) handlerGetFeedFollows(w http.ResponseWriter, r *http.Re
 }
 
 func (apiCfg *apiConfig) handlerDeleteFeedFollow(w http.ResponseWriter, r *http.Request, user database.User) {
-  feedFollowIDStr := chi.URLParam(r,"feedFollowID")
-  feedFollowId,err := uuid.Parse(feedFollowIDStr)
+	feedFollowIDStr := chi.URLParam(r, "feedFollowID")
+	feedFollowId, err := uuid.Parse(feedFollowIDStr)
 	if err != nil {
 		respondWithError(w, 400, fmt.Sprintf("Error parsing feedFollowID: %v", err))
 		return

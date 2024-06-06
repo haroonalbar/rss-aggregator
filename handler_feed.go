@@ -40,6 +40,7 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 	respondWithJSON(w, 201, databaseFeedtoFeed(feed))
 
 }
+
 func (apiCfg *apiConfig) handlerUpdateFeed(w http.ResponseWriter, r *http.Request, user database.User) {
 	type Parameters struct {
 		Name string `json:"name"`

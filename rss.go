@@ -28,7 +28,7 @@ func urlToFeed(url string) (RssFeed, error) {
 	// create a http client that timesout on 10 second
 	httpClient := http.Client{Timeout: 10 * time.Second}
 
-  // make a get request to url
+	// make a get request to url
 	resp, err := httpClient.Get(url)
 	if err != nil {
 		return RssFeed{}, err
