@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-chi/chi"
 	"github.com/google/uuid"
 	"github.com/haroonalbar/rss-aggregater/internal/database"
 )
@@ -47,4 +48,28 @@ func (apiCfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	respondWithJSON(w, 200, databaseFeedstoFeeds(feeds))
+}
+
+func (apiCfg *apiConfig) handlerGetNextFeedToFetch(w http.ResponseWriter, r *http.Request) {
+	nextFeed, err := apiCfg.DB.GetNextFeedToFetch(r.Context())
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get next feed to fetch: %v", err))
+		return
+	}
+	respondWithJSON(w, 200, nextFeed)
+}
+
+func (apiCfg *apiConfig) handlerMarkFeedAsFetched(w http.ResponseWriter, r *http.Request) {
+	feedIDStr := chi.URLParam(r, "feedID")
+	feedID, err := uuid.Parse(feedIDStr)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Error parsing feed id: %v", err))
+		return
+	}
+	nextFeed, err := apiCfg.DB.MarkFeedAsFetched(r.Context(), feedID)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get next feed to fetch: %v", err))
+		return
+	}
+	respondWithJSON(w, 200, nextFeed)
 }
