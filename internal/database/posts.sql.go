@@ -67,7 +67,7 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 
 const getPostsForUser = `-- name: GetPostsForUser :many
 SELECT
-    
+    posts.id, posts.created_at, posts.updated_at, posts.title, posts.description, posts.published_at, posts.url, posts.feed_id
 FROM
     posts
     JOIN feed_follows ON posts.feed_id = feed_follows.feed_id
@@ -75,8 +75,7 @@ WHERE
     feed_follows.user_id = $1
 ORDER BY
     posts.published_at DESC
-LIMIT
-    $2
+LIMIT $2
 `
 
 type GetPostsForUserParams struct {
@@ -84,19 +83,25 @@ type GetPostsForUserParams struct {
 	Limit  int32
 }
 
-type GetPostsForUserRow struct {
-}
-
-func (q *Queries) GetPostsForUser(ctx context.Context, arg GetPostsForUserParams) ([]GetPostsForUserRow, error) {
+func (q *Queries) GetPostsForUser(ctx context.Context, arg GetPostsForUserParams) ([]Post, error) {
 	rows, err := q.db.QueryContext(ctx, getPostsForUser, arg.UserID, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []GetPostsForUserRow
+	var items []Post
 	for rows.Next() {
-		var i GetPostsForUserRow
-		if err := rows.Scan(); err != nil {
+		var i Post
+		if err := rows.Scan(
+			&i.ID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Title,
+			&i.Description,
+			&i.PublishedAt,
+			&i.Url,
+			&i.FeedID,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
