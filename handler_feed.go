@@ -70,7 +70,7 @@ func (apiCfg *apiConfig) handlerUpdateFeed(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	respondWithJSON(w, 201, databaseFeedtoFeed(feed))
+	respondWithJSON(w, 200, databaseFeedtoFeed(feed))
 }
 
 func (apiCfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request) {
