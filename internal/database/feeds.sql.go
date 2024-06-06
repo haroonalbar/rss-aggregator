@@ -13,9 +13,10 @@ import (
 )
 
 const createFeed = `-- name: CreateFeed :one
-INSERT INTO feeds (id, created_at, updated_at, name, url, user_id)
-VALUES ($1, $2, $3, $4, $5, $6)
-RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
+INSERT INTO
+    feeds (id, created_at, updated_at, name, url, user_id)
+VALUES
+    ($1, $2, $3, $4, $5, $6) RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
 `
 
 type CreateFeedParams struct {
@@ -50,7 +51,10 @@ func (q *Queries) CreateFeed(ctx context.Context, arg CreateFeedParams) (Feed, e
 }
 
 const getFeeds = `-- name: GetFeeds :many
-SELECT id, created_at, updated_at, name, url, user_id, last_fetched_at FROM feeds
+SELECT
+    id, created_at, updated_at, name, url, user_id, last_fetched_at
+FROM
+    feeds
 `
 
 func (q *Queries) GetFeeds(ctx context.Context) ([]Feed, error) {
@@ -85,9 +89,14 @@ func (q *Queries) GetFeeds(ctx context.Context) ([]Feed, error) {
 }
 
 const getNextFeedsToFetch = `-- name: GetNextFeedsToFetch :many
-SELECT id, created_at, updated_at, name, url, user_id, last_fetched_at FROM feeds
-ORDER BY last_fetched_at ASC NULLS FIRST
-LIMIT $1
+SELECT
+    id, created_at, updated_at, name, url, user_id, last_fetched_at
+FROM
+    feeds
+ORDER BY
+    last_fetched_at ASC NULLS FIRST
+LIMIT
+    $1
 `
 
 func (q *Queries) GetNextFeedsToFetch(ctx context.Context, limit int32) ([]Feed, error) {
@@ -122,10 +131,13 @@ func (q *Queries) GetNextFeedsToFetch(ctx context.Context, limit int32) ([]Feed,
 }
 
 const markFeedAsFetched = `-- name: MarkFeedAsFetched :one
-UPDATE feeds
-SET last_fetched_at = NOW(), updated_at = NOW()
-WHERE id=$1
-RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
+UPDATE
+    feeds
+SET
+    last_fetched_at = NOW(),
+    updated_at = NOW()
+WHERE
+    id = $1 RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
 `
 
 func (q *Queries) MarkFeedAsFetched(ctx context.Context, id uuid.UUID) (Feed, error) {
@@ -144,10 +156,15 @@ func (q *Queries) MarkFeedAsFetched(ctx context.Context, id uuid.UUID) (Feed, er
 }
 
 const updateFeed = `-- name: UpdateFeed :one
-UPDATE feeds
-SET updated_at=NOw(), name=$3, url=$4
-WHERE id=$1 AND user_id=$2
-RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
+UPDATE
+    feeds
+SET
+    updated_at = NOW(),
+    name = $3,
+    url = $4
+WHERE
+    id = $1
+    AND user_id = $2 RETURNING id, created_at, updated_at, name, url, user_id, last_fetched_at
 `
 
 type UpdateFeedParams struct {

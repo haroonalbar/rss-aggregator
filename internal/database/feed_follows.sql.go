@@ -13,9 +13,10 @@ import (
 )
 
 const createFeedFollows = `-- name: CreateFeedFollows :one
-INSERT INTO feed_follows (id, created_at, updated_at, user_id, feed_id)
-VALUES ($1, $2, $3, $4, $5)
-RETURNING id, created_at, updated_at, user_id, feed_id
+INSERT INTO
+    feed_follows (id, created_at, updated_at, user_id, feed_id)
+VALUES
+    ($1, $2, $3, $4, $5) RETURNING id, created_at, updated_at, user_id, feed_id
 `
 
 type CreateFeedFollowsParams struct {
@@ -46,7 +47,11 @@ func (q *Queries) CreateFeedFollows(ctx context.Context, arg CreateFeedFollowsPa
 }
 
 const deleteFeedFollow = `-- name: DeleteFeedFollow :exec
-DELETE FROM feed_follows WHERE id=$1 AND user_id=$2
+DELETE FROM
+    feed_follows
+WHERE
+    id = $1
+    AND user_id = $2
 `
 
 type DeleteFeedFollowParams struct {
@@ -60,7 +65,12 @@ func (q *Queries) DeleteFeedFollow(ctx context.Context, arg DeleteFeedFollowPara
 }
 
 const getFeedFollows = `-- name: GetFeedFollows :many
-SELECT id, created_at, updated_at, user_id, feed_id FROM feed_follows WHERE user_id=$1
+SELECT
+    id, created_at, updated_at, user_id, feed_id
+FROM
+    feed_follows
+WHERE
+    user_id = $1
 `
 
 func (q *Queries) GetFeedFollows(ctx context.Context, userID uuid.UUID) ([]FeedFollow, error) {
