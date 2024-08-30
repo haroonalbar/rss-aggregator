@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Request, user database.User) {
@@ -38,7 +38,6 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 	}
 
 	respondWithJSON(w, 201, databaseFeedtoFeed(feed))
-
 }
 
 func (apiCfg *apiConfig) handlerUpdateFeed(w http.ResponseWriter, r *http.Request, user database.User) {

@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 type User struct {
@@ -96,7 +96,7 @@ type Post struct {
 
 func databasePostToPost(dbPost database.Post) Post {
 	var description *string
-  // check if description is valid
+	// check if description is valid
 	if dbPost.Description.Valid {
 		description = &dbPost.Description.String
 	}

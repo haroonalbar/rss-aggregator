@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/haroonalbar/rss-aggregater/auth"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/auth"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 // handler with database.User

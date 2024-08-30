@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 // this will be running in the background of the app and should not stop scrapping
@@ -37,7 +37,6 @@ func startScrapping(db *database.Queries, concurrency int, timeBetweenRequest ti
 		}
 		wg.Wait()
 	}
-
 }
 
 func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed) {

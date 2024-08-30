@@ -1,4 +1,4 @@
-module github.com/haroonalbar/rss-aggregater
+module github.com/haroonalbar/rss-aggregator
 
 go 1.22.3
 
