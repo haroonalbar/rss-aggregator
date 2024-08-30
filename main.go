@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 	"github.com/joho/godotenv"
 
 	// have to do this to for the db connection to work properly
@@ -25,7 +25,6 @@ type apiConfig struct {
 }
 
 func main() {
-
 	// this will load the env from the .env file
 	godotenv.Load()
 
@@ -39,7 +38,7 @@ func main() {
 		log.Fatal("DB_URL is not in the env")
 	}
 
-	//connect to db
+	// connect to db
 	// postgres is the driver name
 	conn, err := sql.Open("postgres", dbURL)
 	if err != nil {
@@ -53,7 +52,7 @@ func main() {
 		DB: db,
 	}
 
-  // start scrapping in new go routine 
+	// start scrapping in new go routine
 	go startScrapping(db, 10, time.Minute)
 
 	// adding a router using chi
@@ -83,7 +82,7 @@ func main() {
 	v1Router.Post("/feed_follows", apiCfg.middlewareAuth(apiCfg.handlerCreateFeedFollows))
 	v1Router.Get("/feed_follows", apiCfg.middlewareAuth(apiCfg.handlerGetFeedFollows))
 	v1Router.Delete("/feed_follows/{feedFollowID}", apiCfg.middlewareAuth(apiCfg.handlerDeleteFeedFollow))
-  v1Router.Get("/posts",apiCfg.middlewareAuth(apiCfg.handlerGetPostForUser))
+	v1Router.Get("/posts", apiCfg.middlewareAuth(apiCfg.handlerGetPostForUser))
 
 	// mount the v1Router to router so the whole path will become path/v1/ready
 	router.Mount("/v1", v1Router)
@@ -94,7 +93,7 @@ func main() {
 		Addr:    ":" + port,
 	}
 
-	//start server
+	// start server
 	fmt.Println("Listening to server on PORT:", port)
 	if err := srv.ListenAndServe(); err != nil {
 		log.Fatal(err)

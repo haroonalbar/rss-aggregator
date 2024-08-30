@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 // a user can only follow a feed once this will fail if you call it twice
@@ -37,7 +37,6 @@ func (apiCfg *apiConfig) handlerCreateFeedFollows(w http.ResponseWriter, r *http
 	}
 
 	respondWithJSON(w, 201, databaseFeedFollowtoFeedFollow(feedFollow))
-
 }
 
 func (apiCfg *apiConfig) handlerGetFeedFollows(w http.ResponseWriter, r *http.Request, user database.User) {

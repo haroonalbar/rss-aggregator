@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/haroonalbar/rss-aggregater/internal/database"
+	"github.com/haroonalbar/rss-aggregator/internal/database"
 )
 
 // make the handler a method to take in the apiConfig
