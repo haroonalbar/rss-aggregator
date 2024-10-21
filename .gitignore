@@ -1,4 +1,5 @@
 # build
 rss-aggregater
 
+/bin
 .env
