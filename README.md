@@ -1,4 +1,6 @@
-This is a rss scrapper service built with Golang.
+# RSS Aggregator
+
+#### This is a rss scrapper service built with Golang
 
 ## Getting Started
 
