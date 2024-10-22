@@ -41,6 +41,8 @@ The service will start and begin scraping RSS feeds as configured.
   service.
 - [PostgreSQL](https://www.postgresql.org/): Database for storing feed and post
   data.
+- [Goose](https://github.com/pressly/goose): Goose is a database migration tool  Resource Sharing.
+- [Sqlc](https://github.com/sqlc-dev/sqlc): sqlc generates type-safe code from SQL
 - [Chi Router](https://github.com/go-chi/chi): Lightweight, idiomatic and
   composable router for building Go HTTP services.
 - [UUID](https://github.com/google/uuid): For generating unique identifiers for
