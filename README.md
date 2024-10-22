@@ -11,7 +11,12 @@ cd rss-aggregater
 go build
 ```
 
-Set up .env
+Set up .env from .env.example
+Set your db url in .env
+
+```sh
+mv .env.example .env
+```
 
 Migrate DB using goose
 
