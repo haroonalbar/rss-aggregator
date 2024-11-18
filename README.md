@@ -4,8 +4,14 @@ This is a robust RSS scraper service built with Golang. It is designed to effici
 
 ## Key Features
 
-- **Multi-Feed Support**: Scrape and aggregate feeds from multiple sources simultaneously.
-- **Database Integration**: Store scraped data in a PostgreSQL database for persistent access and management.
+- **Multi-Feed Support**: Scrape and aggregate feeds from multiple sources
+  simultaneously.
+- **RSS Feed Parsing**: Efficiently parse and aggregate RSS feeds.
+- **Database Integration**: Store scraped data in a PostgreSQL database for
+  persistent access and management.
+- **Concurrency**: Utilize Golang's concurrency model for faster processing.
+- **Error Handling**: Robust error handling for network and parsing errors.
+- **Logging**: Comprehensive logging for monitoring and debugging.
 
 ## Getting Started
 
