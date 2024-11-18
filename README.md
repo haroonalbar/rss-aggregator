@@ -1,6 +1,11 @@
 # RSS Aggregator
 
-#### This is a rss scrapper service built with Golang
+This is a robust RSS scraper service built with Golang. It is designed to efficiently aggregate and manage RSS feeds from various sources, allowing users to easily access and consume content from their favorite websites. The service supports multiple configurations and is optimized for performance and scalability, making it suitable for both personal and enterprise-level applications.
+
+## Key Features
+
+- **Multi-Feed Support**: Scrape and aggregate feeds from multiple sources simultaneously.
+- **Database Integration**: Store scraped data in a PostgreSQL database for persistent access and management.
 
 ## Getting Started
 
